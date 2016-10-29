@@ -16,6 +16,8 @@ var dollarSign: Character = "$"
 var myFirstSwiftString: String = "mo' money"
 var mySecondSwiftString: String = "mo' problems"
 var concatenatedString:String = myFirstSwiftString + ", " + mySecondSwiftString
+type(of: concatenatedString)
+
 
 //: ### Stay tuned for more on Optionals and Tuples in the upcoming lessons!
 

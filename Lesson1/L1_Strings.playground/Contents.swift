@@ -47,7 +47,7 @@ doggyDiet = "\(dogName) eats ?lbs of dog food per month"
 var frankiePic = UIImage(named:"frankie.jpeg")!
 lbsPerDay = 0.25
 dogName = "Lil Frankie"
-doggyDiet = "\(dogName) eats ?lbs of dog food per month"
+doggyDiet = "\(dogName) eats \(lbsPerDay * daysPerMonth)lbs of dog food per month"
 //: ## A String isn't just a String
 
 //: ### Through the .characters property we can access an array of characters
@@ -55,7 +55,6 @@ var password = "Meet me in St. Louis"
 for character in password.characters {
     if character == "e" {
         print("found an e!")
-    } else {
     }
 }
 
