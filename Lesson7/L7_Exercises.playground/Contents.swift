@@ -34,76 +34,78 @@ macchiato.steamedMilk
 //:
 //: __2b.__
 //: Associate an Int value with each finger.
-
+enum Fingers: Int {
+    case thumb = 1, index, middle, ring, pinky
+}
 //: __Problem 3__
 //:
 //: Enum, class, or struct?
 //:
 //: Uncomment the code below and choose whether each type should be an enum, class, or struct.
-//____ Window {
-//    let height: Double
-//    let width: Double
-//    var open: Bool
-//}
+struct Window {
+    let height: Double
+    let width: Double
+    var open: Bool
+}
 
-//____ WritingImplement {
-//    case pen
-//    case pencil
-//    case marker
-//    case crayon
-//    case chalk
-//}
+enum WritingImplement {
+    case pen
+    case pencil
+    case marker
+    case crayon
+    case chalk
+}
 
-//____ Material {
-//    let name: String
-//    let density: Double
-//    let stiffness: Double
-//}
+struct Material {
+    let name: String
+    let density: Double
+    let stiffness: Double
+}
 
 
-//____ Bicycle {
-//    let frame: Material
-//    let weight: Double
-//    let category: String
-//
-//    static var bikeCategories: [String] = ["Road", "Touring", "Mountain", "Commuter", "BMX"]
-//
-//    func lookCool() {
-//        print("Check out my gear-shifters!")
-//    }
-//}
+struct Bicycle {
+    let frame: Material
+    let weight: Double
+    let category: String
 
-//____ Cyclist {
-//    var speed: Double
-//    let agility: Double
-//    let bike: Bicycle
-//
-//    var maneuverability: Double {
-//        get {
-//            return agility - speed/5
-//        }
-//    }
-//
-//    init(speed: Double, agility: Double, bike: Bicycle) {
-//        self.speed = speed
-//        self.agility = agility
-//        self.bike = bike
-//    }
-//
-//    func brake() {
-//        speed -= 1
-//    }
-//
-//    func pedalFaster(factor: Double) {
-//        speed * factor
-//    }
-//}
+    static var bikeCategories: [String] = ["Road", "Touring", "Mountain", "Commuter", "BMX"]
 
-//____ Size: String {
-//    case small = "8 ounces"
-//    case medium = "12 ounces"
-//    case large = "16 ounces"
-//}
+    func lookCool() {
+        print("Check out my gear-shifters!")
+    }
+}
+
+class Cyclist {
+    var speed: Double
+    let agility: Double
+    let bike: Bicycle
+
+    var maneuverability: Double {
+        get {
+            return agility - speed/5
+        }
+    }
+
+    init(speed: Double, agility: Double, bike: Bicycle) {
+        self.speed = speed
+        self.agility = agility
+        self.bike = bike
+    }
+
+    func brake() {
+        speed -= 1
+    }
+
+    func pedalFaster(factor: Double) {
+        speed * factor
+    }
+}
+
+enum Size: String {
+    case small = "8 ounces"
+    case medium = "12 ounces"
+    case large = "16 ounces"
+}
 
 //: __Problem 4__
 //:
@@ -111,7 +113,24 @@ macchiato.steamedMilk
 //:
 //: __4a.__
 //: Include 2 stored properties. Examples might include a string representing flavor, or an int representing minutesSinceRemovalFromOven.
-
+struct Cookie {
+    let name: String
+    var timeTillCool: Int
+    
+    var readyToEat: Bool {
+        return timeTillCool == 0 ? true : false
+    }
+    
+    func tempt() {
+        if !self.readyToEat && self.name == "Sugar Cookie" {
+            print("Not ready, but so tempting")
+        } else if self.readyToEat {
+            print("What, its ready.")
+        } else {
+            print("Waiting's not so bad.")
+        }
+    }
+}
 //:__4b.__
 //: Add a computed property, "delicious", a bool whose value depends upon the values of the stored properties.
 
@@ -120,7 +139,8 @@ macchiato.steamedMilk
 
 //: __4d.__
 //: Create an instance of your Cookie struct and call its method.
-
+let cookie = Cookie(name: "Ginger snap", timeTillCool: 2)
+cookie.tempt()
 //: __Problem 5__
 //:
 //: Write a class to represent a listing for a Bed and Breakfast.
@@ -133,6 +153,42 @@ macchiato.steamedMilk
 
 //: __5c.__
 //: Include at least one method. For example, the method book() might toggle the availability bool or return a reservation confirmation.
+enum Times {
+    case Morning, Afternoon, Evening
+}
 
+class BandB  {
+    let hasGoodCoffee: Bool
+    var numRoomsAvailable: Int
+    let name: String
+    let checkinTime: Times
+    
+    init(hasGoodCoffee: Bool, numRoomsAvailable: Int, name: String, checkinTime: Times) {
+        self.hasGoodCoffee = hasGoodCoffee
+        self.numRoomsAvailable = numRoomsAvailable
+        self.name = name
+        self.checkinTime = checkinTime
+    }
+    
+    func book(numOfRooms: Int) {
+        if _hasRoomsFor(numOfRooms) {
+            numRoomsAvailable -= 1
+            print("We have your reservation")
+        } else {
+            print("I'm sorry but we booked at capacity on that day")
+        }
+    }
+    
+    func checkout() {
+        numRoomsAvailable += 1
+        print("Thank you for joining us here at \(name). We hope you enjoyed your stay")
+    }
+    
+    func _hasRoomsFor(_ numOfRooms: Int) -> Bool {
+        return numRoomsAvailable - numOfRooms >= 0
+    }
+}
 //: __5d.__
 //: Create an instance of your BnBListing class and call one of its methods.
+let location = BandB(hasGoodCoffee: true, numRoomsAvailable: 10, name: "Country Home", checkinTime: Times.Afternoon)
+location.book(numOfRooms: 5)
